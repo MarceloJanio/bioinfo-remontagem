@@ -14,8 +14,10 @@ class aresta:
         return self.label
 
 class grafo:
-    nos = []
+    nos = {}
     arestas = []
+    initialNode = ""
+    finalNode = ""
     
     def __init__(self):
         pass
@@ -23,15 +25,31 @@ class grafo:
     def addAresta(self, aresta):
         self.arestas.append(aresta)
         
-    def addNos(self, no):
+    def addNos(self, no, operation):
         if(no not in self.nos):
-            self.nos.append(no)
+            self.nos[no] = [0,0]
+        if operation == "pre":
+            self.nos[no] = [self.nos[no][0] + 1, self.nos[no][1]]
+        if operation == "suf":
+            self.nos[no] = [self.nos[no][0], self.nos[no][1] + 1]
             
     def getNos(self):
         return self.nos
 
     def getArestas(self):
-            return self.arestas
+        return self.arestas
+    
+    def setInitialNode(self, no):
+        self.initialNode = no
+
+    def getInitialNode(self):
+        return self.initialNode 
+    
+    def setFinalNode(self, no):
+        self.finalNode = no
+
+    def getFinalNode(self):
+        return self.finalNode 
 
 fita = ""
 
@@ -50,7 +68,7 @@ def MontaEuleriano(linkedList):
     pass
 
 
-with open("exemplo.txt", 'r') as file:
+with open("vale7.txt", 'r') as file:
     fita += file.read()
 
 
@@ -69,10 +87,21 @@ grafoG = grafo()
 
 for i in LinkedList:
     grafoG.addAresta(i)
-    grafoG.addNos(i.getNoInicial())
-    grafoG.addNos(i.getNoFinal())
+    grafoG.addNos(i.getNoInicial(), "pre")
+    grafoG.addNos(i.getNoFinal(), "suf")
     
+for key, value in grafoG.getNos().items():
+    if value[0] > value[1]:
+        grafoG.setInitialNode(key)
+    if value[1] > value[0]:
+        grafoG.setFinalNode(key)
+
+    if(grafoG.getFinalNode() != "" and grafoG.getInitialNode() != ""):
+        break
+
 print(grafoG.getNos())
+print(grafoG.getInitialNode())
+print(grafoG.getFinalNode())
 
 def mountGraph(dnaFita, k):
     pass
