@@ -50,25 +50,38 @@ class grafo:
 
     def getFinalNode(self):
         return self.finalNode 
+    
+    def MontaEuleriano(self):
+        pointer = self.initialNode
+        self.arestas
 
 fita = ""
 
 def quebraPreSuf(listaFita, k):
-    LinkedList = []
+    dictGraph = {}
     for i in listaFita:
-        a = aresta(i[0:k-1], i[1:k], i)
-        LinkedList.append(a)
+        prefix = i[0:k-1]
+        sufix = i[1:k]
+        if(prefix in dictGraph.keys()):
+            dictGraph[prefix][0].append(sufix)
+            dictGraph[prefix][1][0] = dictGraph[prefix][1][0] + 1
+        else:
+            dictGraph[prefix] = [[sufix],[1,0]]
 
-    for i in LinkedList:
-        print("V1: {} V2: {} Label: {}".format(i.getNoInicial(), i.getNoFinal(), i.getLabel()))
+        if(sufix not in dictGraph.keys()):
+            dictGraph[sufix] = [[],[0,1]]
+        else:
+            dictGraph[sufix][1][1] = dictGraph[sufix][1][1] + 1
+
+    print(dictGraph)
         
-    return LinkedList
+    return dictGraph
         
 def MontaEuleriano(linkedList):
     pass
 
 
-with open("vale7.txt", 'r') as file:
+with open("exemplo.txt", 'r') as file:
     fita += file.read()
 
 
@@ -83,25 +96,25 @@ k = len(fita[0])
 
 LinkedList = quebraPreSuf(fita,k)
 
-grafoG = grafo()
+# grafoG = grafo()
 
-for i in LinkedList:
-    grafoG.addAresta(i)
-    grafoG.addNos(i.getNoInicial(), "pre")
-    grafoG.addNos(i.getNoFinal(), "suf")
+# for i in LinkedList:
+#     grafoG.addAresta(i)
+#     grafoG.addNos(i.getNoInicial(), "pre")
+#     grafoG.addNos(i.getNoFinal(), "suf")
     
-for key, value in grafoG.getNos().items():
-    if value[0] > value[1]:
-        grafoG.setInitialNode(key)
-    if value[1] > value[0]:
-        grafoG.setFinalNode(key)
+# for key, value in grafoG.getNos().items():
+#     if value[0] > value[1]:
+#         grafoG.setInitialNode(key)
+#     if value[1] > value[0]:
+#         grafoG.setFinalNode(key)
 
-    if(grafoG.getFinalNode() != "" and grafoG.getInitialNode() != ""):
-        break
+#     if(grafoG.getFinalNode() != "" and grafoG.getInitialNode() != ""):
+#         break
 
-print(grafoG.getNos())
-print(grafoG.getInitialNode())
-print(grafoG.getFinalNode())
+# print(grafoG.getNos())
+# print(grafoG.getInitialNode())
+# print(grafoG.getFinalNode())
 
-def mountGraph(dnaFita, k):
-    pass
+# def mountGraph(dnaFita, k):
+#     pass
