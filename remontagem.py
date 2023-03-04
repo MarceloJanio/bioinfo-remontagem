@@ -1,59 +1,4 @@
-class aresta:
-    def __init__(self, noInicial, noFinal, label):
-        self.noInicial = noInicial
-        self.noFinal = noFinal
-        self.label = label
-
-    def getNoInicial(self):
-        return self.noInicial
-    
-    def getNoFinal(self):
-        return self.noFinal
-
-    def getLabel(self):
-        return self.label
-
-class grafo:
-    nos = {}
-    arestas = []
-    initialNode = ""
-    finalNode = ""
-    
-    def __init__(self):
-        pass
-    
-    def addAresta(self, aresta):
-        self.arestas.append(aresta)
-        
-    def addNos(self, no, operation):
-        if(no not in self.nos):
-            self.nos[no] = [0,0]
-        if operation == "pre":
-            self.nos[no] = [self.nos[no][0] + 1, self.nos[no][1]]
-        if operation == "suf":
-            self.nos[no] = [self.nos[no][0], self.nos[no][1] + 1]
-            
-    def getNos(self):
-        return self.nos
-
-    def getArestas(self):
-        return self.arestas
-    
-    def setInitialNode(self, no):
-        self.initialNode = no
-
-    def getInitialNode(self):
-        return self.initialNode 
-    
-    def setFinalNode(self, no):
-        self.finalNode = no
-
-    def getFinalNode(self):
-        return self.finalNode 
-    
-    def MontaEuleriano(self):
-        pointer = self.initialNode
-        self.arestas
+import time
 
 fita = ""
 
@@ -77,11 +22,22 @@ def quebraPreSuf(listaFita, k):
         
     return dictGraph
         
-def MontaEuleriano(linkedList):
-    pass
+def findInitialnFinal(dictGraph):
+    initial = ""
+    final = ""
 
+    for key, value in dictGraph.items():
+        if(value[1][0] > value[1][1]):
+            initial = key
+        if(value[1][0] < value[1][1]):
+            final = key
+    
+    if(initial != "" and final != ""):
+        print("{} {}".format(initial, final))
+        return initial, final
 
-with open("exemplo.txt", 'r') as file:
+## abre arquivo
+with open("exemplo2.txt", 'r') as file:
     fita += file.read()
 
 
@@ -93,8 +49,53 @@ if(fita[-1] == ','):
 fita = fita.split(',')
 print(fita)
 k = len(fita[0])
+###########################
+
 
 LinkedList = quebraPreSuf(fita,k)
+initial, final = findInitialnFinal(LinkedList)
+
+def montaEuleriano(dictGrafo, initial, k):
+
+    sequencias = []
+
+    fita = initial
+    ponteiro = initial
+
+    print(dictGrafo.get(ponteiro)[0])
+
+    while(len(dictGrafo.keys())!=0):
+        print(dictGrafo.get(ponteiro)[0])
+        print(dictGrafo)
+        print(fita)
+        if(dictGrafo.get(ponteiro)[0] != []):
+            remove = ponteiro
+            ponteiro = dictGrafo.get(ponteiro)[0][0]
+            fita += ponteiro[-1]
+            dictGrafo[remove][0].remove(ponteiro)
+            if(len(dictGrafo.get(remove)[0]) == 0):
+                del dictGrafo[remove]
+            if(dictGrafo.get(ponteiro) == None):
+                for i in range(0, len(fita)-1):
+                    primeiraParte = ""
+                    segundaParte = ""
+                    atual = fita[i:i+2]
+                    if(dictGrafo.get(atual) != None):
+
+                break      
+
+
+    print(fita)
+    print(dictGrafo)
+    print(sequencias)
+
+#GAGCC CCGC ACCACGAGGTCACGAG
+#
+
+# ['CC', 'CG']
+# {'CC': [['CC', 'CG'], [4, 4]], 'CG': [['GC'], [3, 3]], 'GC': [['CC'], [2, 2]]}
+
+montaEuleriano(LinkedList, initial, k)
 
 # grafoG = grafo()
 
