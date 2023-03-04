@@ -14,7 +14,7 @@ def quebraPreSuf(listaFita, k):
         else:
             dictGraph[sufix][1][1] = dictGraph[sufix][1][1] + 1
 
-    print(dictGraph)
+    # print('{} \n'.format(dictGraph))
         
     return dictGraph
         
@@ -27,7 +27,6 @@ def findInitialnFinal(dictGraph):
         if(value[1][0] < value[1][1]):
             final = key
     if(initial != "" and final != ""):
-        print("{} {}".format(initial, final))
         return initial, final
 
 ## abre arquivo
@@ -50,14 +49,13 @@ def abreArquivo(nome, modo):
 
 
 
-def montaEuleriano(dictGrafo, initial, k):
+def montaEuleriano(dictGrafo, initial, k, final):
     primeiraParte = ""
     segundaParte = ""
 
+
     fita = initial
     ponteiro = initial
-
-    print(dictGrafo.get(ponteiro)[0])
 
     while(len(dictGrafo.keys())!=0):
         if(dictGrafo.get(ponteiro)[0] != []):
@@ -77,19 +75,21 @@ def montaEuleriano(dictGrafo, initial, k):
                         primeiraParte = fita[0:i+2]
                         segundaParte = fita[i+2:len(fita)]
                         fita = ""
-                        print("pp"+primeiraParte)
-                        print("sp"+segundaParte)
-                        print("p"+ponteiro)
-                        break      
-
-    print(fita)
-    print(dictGrafo)
+                        break    
+        else:
+            del dictGrafo[ponteiro]
+        
+    return fita
 
 
 
-fita, k  = abreArquivo('exemplo.txt', 'r')
+fita, k  = abreArquivo('vale7.txt', 'r')
 
 LinkedList = quebraPreSuf(fita,k)
 initial, final = findInitialnFinal(LinkedList)
 
-montaEuleriano(LinkedList, initial, k)
+fitaFinal = montaEuleriano(LinkedList, initial, k, final)
+
+with open("saida.txt", "w") as arquivo:
+    arquivo.write(fitaFinal)
+
