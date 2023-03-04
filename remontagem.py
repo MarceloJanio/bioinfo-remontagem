@@ -56,7 +56,8 @@ LinkedList = quebraPreSuf(fita,k)
 initial, final = findInitialnFinal(LinkedList)
 
 def montaEuleriano(dictGrafo, initial, k):
-
+    primeiraParte = ""
+    segundaParte = ""
     sequencias = []
 
     fita = initial
@@ -65,9 +66,6 @@ def montaEuleriano(dictGrafo, initial, k):
     print(dictGrafo.get(ponteiro)[0])
 
     while(len(dictGrafo.keys())!=0):
-        print(dictGrafo.get(ponteiro)[0])
-        print(dictGrafo)
-        print(fita)
         if(dictGrafo.get(ponteiro)[0] != []):
             remove = ponteiro
             ponteiro = dictGrafo.get(ponteiro)[0][0]
@@ -76,24 +74,29 @@ def montaEuleriano(dictGrafo, initial, k):
             if(len(dictGrafo.get(remove)[0]) == 0):
                 del dictGrafo[remove]
             if(dictGrafo.get(ponteiro) == None):
+                fitaAux = fita
+                fita = primeiraParte+fitaAux+segundaParte
                 for i in range(0, len(fita)-1):
-                    primeiraParte = ""
-                    segundaParte = ""
                     atual = fita[i:i+2]
                     if(dictGrafo.get(atual) != None):
-
-                break      
-
+                        ponteiro = atual
+                        primeiraParte = fita[0:i+2]
+                        segundaParte = fita[i+2:len(fita)]
+                        fita = ""
+                        print("pp"+primeiraParte)
+                        print("sp"+segundaParte)
+                        print("p"+ponteiro)
+                        break      
 
     print(fita)
     print(dictGrafo)
     print(sequencias)
 
-#GAGCC CCGC ACCACGAGGTCACGAG
-#
+#GA GC CCCGC ACCACGAGGTCACGAG
+#GAGCCCGCCACCACGAGGTCACGAG
 
 # ['CC', 'CG']
-# {'CC': [['CC', 'CG'], [4, 4]], 'CG': [['GC'], [3, 3]], 'GC': [['CC'], [2, 2]]}
+# {'CC': [['CC', ], [4, 4]], 'CG': [['GC'], [3, 3]], , [2, 2]]}
 
 montaEuleriano(LinkedList, initial, k)
 
