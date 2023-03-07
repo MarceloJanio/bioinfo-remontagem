@@ -1,10 +1,10 @@
 import random
 
 #Informe o tamanho total da fita de dna:
-bases = 521
+bases = 30
 
 #Informe o tamanho do k:
-k = 11
+k = 5
 
 #Não precisa alterar o código a partir da linha
 #---------------------------------------------------------------------------------------------------#

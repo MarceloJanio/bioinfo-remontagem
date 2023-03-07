@@ -51,8 +51,6 @@ def abreArquivo(nome, modo):
     return fita, k
 
 
-
-
 def montaEuleriano(dictGrafo, initial, k, final):
     primeiraParte = ""
     segundaParte = ""
@@ -72,22 +70,20 @@ def montaEuleriano(dictGrafo, initial, k, final):
             dictGrafo[remove][0].remove(ponteiro)
             if(len(dictGrafo.get(remove)[0]) == 0):
                 del dictGrafo[remove]
-            print(final)
-            print(ponteiro)
-            print(len(dictGrafo.keys()))
-            print(dictGrafo.get(ponteiro))
+            # print(final)
+            # print(ponteiro)
+            # print(len(dictGrafo.keys()))
+            # print(dictGrafo.get(ponteiro))
             try:
                 if(dictGrafo.get(ponteiro)[0] == []):
                     del dictGrafo[ponteiro]
             except:
                 pass
-
             if((dictGrafo.get(ponteiro) == None and len(dictGrafo.keys())>0)):
                 # print("sim")
                 # print(final)
                 # print("ponteiro: ",ponteiro)
                 while(len(dictGrafo.keys())!=0):
-                    
                     for i in range(0, len(fita)-1):
                         
                         # print(fita)
@@ -112,42 +108,6 @@ def montaEuleriano(dictGrafo, initial, k, final):
                                 fita = primeiraParte+fitaAux+segundaParte
                         else:
                             break
-            # try:
-            #     print("ponteiro: ",ponteiro)
-            #     print(dictGrafo.get(ponteiro) == None)
-            #     if(dictGrafo.get(ponteiro)[0] == []):
-            #         del dictGrafo[ponteiro]
-            #         if(len(dictGrafo.keys())> 0 ):
-            #             while(len(dictGrafo.keys())!=0):
-            #                 for i in range(0, len(fita)-1):
-            #                     print(fita)
-            #                     print(dictGrafo.keys())
-            #                     if(len(dictGrafo.keys())!=0):
-            #                         atual = fita[i:i+k-1]
-            #                         print(atual)
-            #                         if(atual in dictGrafo.keys()):
-            #                             primeiraParte = fita[0:i+k-1]
-            #                             segundaParte = fita[i+k-1:len(fita)]
-            #                             print("fita: ",fita)
-            #                             print(primeiraParte)
-            #                             print(segundaParte)
-            #                             fitaAux = ""
-            #                             ponteiro = dictGrafo.get(atual)[0][0]
-            #                             while(ponteiro in dictGrafo.keys()):
-                                            
-            #                                 remove = ponteiro
-            #                                 fitaAux += ponteiro[-1]
-            #                                 ponteiro = dictGrafo.get(remove)[0][0]
-            #                                 dictGrafo[remove][0].remove(ponteiro)
-            #                                 if(len(dictGrafo.get(remove)[0]) == 0):
-            #                                     del dictGrafo[remove]
-            #                             fita = primeiraParte+fitaAux+segundaParte
-            #                     else:
-            #                         break
-            #             break
-            # except:
-            #     print("entrou aqui")
-            #     break
     return fita
 
 
