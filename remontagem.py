@@ -1,15 +1,14 @@
+#quebra em prefixo e sufixo
+
 def quebraPreSuf(listaFita, k):
     dictGraph = {}
     for i in listaFita:
         prefix = i[0:k-1]
         sufix = i[1:k]
-        # print("analisado: {} pre: {} suf: {}".format(i, prefix, sufix))
         if(prefix in dictGraph.keys()):
-            # print("ja ta")
             dictGraph[prefix][0].append(sufix)
             dictGraph[prefix][1][0] = dictGraph[prefix][1][0] + 1
         else:
-            # print("nao ta, criei")
             dictGraph[prefix] = [[sufix],[1,0]]
 
         if(sufix not in dictGraph.keys()):
@@ -17,10 +16,10 @@ def quebraPreSuf(listaFita, k):
         else:
             dictGraph[sufix][1][1] = dictGraph[sufix][1][1] + 1
 
-    # print('{} \n'.format(dictGraph))
         
     return dictGraph
         
+# acha codon inicial e final
 def findInitialnFinal(dictGraph):
     initial = ""
     final = ""
@@ -47,17 +46,14 @@ def abreArquivo(nome, modo):
     fita = fita.split(',')
     k = len(fita[0])
 
-    # print(fita)
     return fita, k
 
+
+#constroi grafo euleriano
 
 def montaEuleriano(dictGrafo, initial, k, final):
     primeiraParte = ""
     segundaParte = ""
-    # print(k)
-    print(dictGrafo)
-    # print(initial)
-    # print(final)
 
     fita = initial
     ponteiro = initial
@@ -70,32 +66,19 @@ def montaEuleriano(dictGrafo, initial, k, final):
             dictGrafo[remove][0].remove(ponteiro)
             if(len(dictGrafo.get(remove)[0]) == 0):
                 del dictGrafo[remove]
-            # print(final)
-            # print(ponteiro)
-            # print(len(dictGrafo.keys()))
-            # print(dictGrafo.get(ponteiro))
             try:
                 if(dictGrafo.get(ponteiro)[0] == []):
                     del dictGrafo[ponteiro]
             except:
                 pass
             if((dictGrafo.get(ponteiro) == None and len(dictGrafo.keys())>0)):
-                # print("sim")
-                # print(final)
-                # print("ponteiro: ",ponteiro)
                 while(len(dictGrafo.keys())!=0):
                     for i in range(0, len(fita)-1):
-                        
-                        # print(fita)
-                        # print(dictGrafo.keys())
                         if(len(dictGrafo.keys())!=0):
                             atual = fita[i:i+k-1]
                             if(atual in dictGrafo.keys()):
                                 primeiraParte = fita[0:i+k-1]
                                 segundaParte = fita[i+k-1:len(fita)]
-                                # print("fita: ",fita)
-                                # print(primeiraParte)
-                                # print(segundaParte)
                                 fitaAux = ""
                                 ponteiro = dictGrafo.get(atual)[0][0]
                                 while(ponteiro in dictGrafo.keys()):
@@ -111,14 +94,15 @@ def montaEuleriano(dictGrafo, initial, k, final):
     return fita
 
 
-
+#carrega arquivo
 fita, k  = abreArquivo('exemplo.txt', 'r')
 
+#constroi grafo
 LinkedList = quebraPreSuf(fita,k)
 initial, final = findInitialnFinal(LinkedList)
-
 fitaFinal = montaEuleriano(LinkedList, initial, k, final)
 
+#salva saida
 with open("output.txt", "w") as arquivo:
     arquivo.write(fitaFinal)
 

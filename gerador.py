@@ -6,9 +6,6 @@ bases = 30
 #Informe o tamanho do k:
 k = 5
 
-#Não precisa alterar o código a partir da linha
-#---------------------------------------------------------------------------------------------------#
-
 dna = []
 mers = []
 letras = "ACGT"
